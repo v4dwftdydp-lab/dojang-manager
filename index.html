@@ -203,6 +203,36 @@ button.secondary {
   color: #17365D !important;
   border-color: #CBD5E1 !important;
 }
+/* 1. 관리자 버튼: 흰색 배경 + 흰색 글씨 */
+#navAdmin,
+#navAdmin.active {
+  background: #FFFFFF !important;
+  color: #FFFFFF !important;
+  border: 1px solid #FFFFFF !important;
+}
+
+/* 2. 학부모 신청 버튼: 연한 청회색 배경 + 남색 글씨 */
+#navParent,
+#navParent.active {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
+  border: 1px solid #E7EEF8 !important;
+}
+
+/* 3. 학부모 신청 및 대회 등록 버튼: 파란색 배경 + 흰색 글씨 */
+#parentView form button:not(.secondary),
+#adminView form button:not(.secondary) {
+  background: #4F6B9A !important;
+  color: #FFFFFF !important;
+  border: 1px solid #4F6B9A !important;
+}
+
+/* 보조 버튼: 연한 청회색 배경 + 남색 글씨 */
+button.secondary {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
+  border: 1px solid #CBD5E1 !important;
+}
 </style>
 /* 전체 배경 및 기본 글씨 */
 body {
