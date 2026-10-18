@@ -193,6 +193,63 @@ button[type="submit"] {
   color: #111111 !important;
 }
 </style>
+/* 전체 배경 및 기본 글씨 */
+body {
+  background: #ffffff !important;
+  color: #111214 !important;
+}
+
+/* 상단 메뉴 */
+nav {
+  background: #111214 !important;
+}
+
+/* 관리자 버튼: 별도 배경색 없이 흰색 글씨 */
+#navAdmin {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+/* 학부모 버튼 */
+#navParent {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
+}
+
+/* 설정 및 대회 생성 버튼 */
+#adminView button,
+#adminView input[type="button"],
+#adminView input[type="submit"] {
+  color: #17365D;
+}
+
+/* 일반 버튼 */
+button {
+  border-color: #CBD5E1;
+}
+
+/* 금색 대신 차분한 파란색 강조 버튼 */
+button.primary,
+button.submit,
+#adminView button[type="submit"] {
+  background: #4F6B9A !important;
+  color: #ffffff !important;
+  border-color: #4F6B9A !important;
+}
+
+/* 일반 버튼은 흰색 배경과 남색 글씨 */
+button:not(#navAdmin):not(#navParent):not(.primary):not(.submit) {
+  color: #17365D;
+}
+
+/* 입력 영역 */
+input,
+select,
+textarea {
+  background-color: #ffffff;
+  color: #111214;
+  border-color: #CBD5E1;
+}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
