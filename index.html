@@ -1,32 +1,221 @@
+
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#173451"><title>우리 도장 대회 관리</title>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173451">
+<title>우리 도장 대회 관리</title>
 <style>
-:root{--navy:#173451;--blue:#2563eb;--bg:#f4f7fb;--line:#dbe3ed;--muted:#64748b;--green:#15803d;--red:#b91c1c}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:#172033}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:700;background:var(--blue);color:white}button.secondary{background:#e8eef6;color:#173451}button.danger{background:#fee2e2;color:#991b1b}.wrap{max-width:980px;margin:auto;padding:16px}.hero{background:linear-gradient(135deg,#173451,#24517b);color:white;border-radius:18px;padding:22px;margin-bottom:16px}.hero h1{margin:5px 0 8px;font-size:25px}.hero p{margin:0;color:#dbeafe}.nav{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}.nav button{background:white;color:#334155;border:1px solid var(--line)}.nav button.active{background:var(--navy);color:white}.card{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field label{font-size:14px;font-weight:700}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px;background:white;color:#172033}.muted{color:var(--muted);font-size:13px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.event{display:block;border:1px solid var(--line);border-radius:12px;padding:13px;background:white;color:#172033;text-align:left;width:100%;margin:9px 0}.total{font-size:25px;font-weight:800;color:var(--navy)}.hidden{display:none!important}.checkline{display:flex;gap:8px;align-items:flex-start;margin:12px 0;font-size:14px}.checkline input{margin-top:4px}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8fafc}.pill{display:inline-block;border-radius:99px;padding:4px 8px;background:#e8eef6;font-size:12px}.green{background:#dcfce7;color:#166534}.orange{background:#ffedd5;color:#9a3412}.notice{padding:12px;border-radius:10px;background:#eff6ff;color:#1e40af;font-size:13px}.footer{font-size:12px;color:var(--muted);text-align:center;padding:20px}@media(max-width:600px){.wrap{padding:10px}.grid{grid-template-columns:1fr}.hero h1{font-size:21px}.row.mobile{align-items:flex-start;flex-direction:column}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script></head>
-<body><main class="wrap"><header class="hero"><div style="font-size:12px;letter-spacing:1px;color:#bfdbfe">DOJANG MANAGEMENT</div><h1 id="dojoTitle">우리 도장 대회 관리</h1><p>대회 신청 · 참가비 확인 · 국기원 최초 1품 접수 준비</p></header>
-<div id="topmsg" class="notice hidden"></div><div class="nav"><button id="navParent" class="active" onclick="showView('parent')">학부모 신청</button><button id="navAdmin" onclick="showView('admin')">관리자</button></div>
-<section id="parentView"></section><section id="adminView" class="hidden"></section><div class="footer">개인정보는 Supabase에 저장되며 관리자 계정으로만 전체 명단을 확인할 수 있습니다.</div></main>
+:root{--navy:#173451;--blue:#2563eb;--bg:#f4f7fb;--line:#dbe3ed;--muted:#64748b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:#172033}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:700;background:var(--blue);color:white}
+button.secondary{background:#e8eef6;color:#173451}
+.wrap{max-width:980px;margin:auto;padding:16px}
+.hero{background:linear-gradient(135deg,#173451,#24517b);color:white;border-radius:18px;padding:22px;margin-bottom:16px}
+.hero h1{margin:5px 0 8px;font-size:25px}
+.hero p{margin:0;color:#dbeafe}
+.nav{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.nav button{background:white;color:#334155;border:1px solid var(--line)}
+.nav button.active{background:var(--navy);color:white}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.field label{font-size:14px;font-weight:700}
+.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px;background:white;color:#172033}
+.muted{color:var(--muted);font-size:13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.event{display:block;border:1px solid var(--line);border-radius:12px;padding:13px;background:white;color:#172033;text-align:left;width:100%;margin:9px 0}
+.total{font-size:25px;font-weight:800;color:var(--navy)}
+.hidden{display:none!important}
+.checkline{display:flex;gap:8px;align-items:flex-start;margin:12px 0;font-size:14px}
+.checkline input{margin-top:4px}
+.tablewrap{overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#f8fafc}
+.pill{display:inline-block;border-radius:99px;padding:4px 8px;background:#e8eef6;font-size:12px}
+.green{background:#dcfce7;color:#166534}
+.orange{background:#ffedd5;color:#9a3412}
+.notice{padding:12px;border-radius:10px;background:#eff6ff;color:#1e40af;font-size:13px}
+.footer{font-size:12px;color:var(--muted);text-align:center;padding:20px}
+@media(max-width:600px){.wrap{padding:10px}.grid{grid-template-columns:1fr}.hero h1{font-size:21px}.row.mobile{align-items:flex-start;flex-direction:column}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<main class="wrap">
+<header class="hero">
+<div style="font-size:12px;letter-spacing:1px;color:#bfdbfe">DOJANG MANAGEMENT</div>
+<h1 id="dojoTitle">우리 도장 대회 관리</h1>
+<p>대회 신청 · 참가비 확인 · 국기원 최초 1품 접수 준비</p>
+</header>
+<div id="topmsg" class="notice hidden"></div>
+<div class="nav">
+<button id="navParent" class="active" onclick="showView('parent')">학부모 신청</button>
+<button id="navAdmin" onclick="showView('admin')">관리자</button>
+</div>
+<section id="parentView"></section>
+<section id="adminView" class="hidden"></section>
+<div class="footer">개인정보는 Supabase에 저장되며 관리자 계정으로만 전체 명단을 확인할 수 있습니다.</div>
+</main>
 <script>
-// 아래 두 값은 도장 운영자가 한 번만 입력합니다. Publishable key만 사용하세요. Secret key 금지.
 const SUPABASE_URL='https://udertixrubzikutffddx.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_BOnSQd3weZio23P0aapELw_aPrCJfdh';
-const $=id=>document.getElementById(id); let sb=null, currentUser=null, settings={dojo_name:'우리 도장',bank_name:'은행명 입력',account_number:'계좌번호 입력',account_holder:'예금주 입력'}; let events=[];
-function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))} function won(n){return Number(n||0).toLocaleString('ko-KR')+'원'} function notice(s){$('topmsg').textContent=s;$('topmsg').classList.remove('hidden')} function clearNotice(){$('topmsg').classList.add('hidden')}
-function init(){if(!window.supabase){notice('연결 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인하세요.');return}if(SUPABASE_PUBLISHABLE_KEY.includes('PASTE_')){notice('운영용 Publishable key가 아직 입력되지 않았습니다. index.html의 키 자리만 교체한 뒤 배포하세요.');renderParentLocal();return}sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);renderParent();}
-function showView(v){$('parentView').classList.toggle('hidden',v!=='parent');$('adminView').classList.toggle('hidden',v!=='admin');$('navParent').classList.toggle('active',v==='parent');$('navAdmin').classList.toggle('active',v==='admin');if(v==='parent')renderParent();else renderAdmin()}
-function renderParentLocal(){ $('parentView').innerHTML='<div class="card"><h2>서비스 준비 중</h2><p>관리자가 연결 설정을 완료한 뒤 신청을 받을 수 있습니다.</p></div>'; }
-async function getSettings(){const {data,error}=await sb.from('settings').select('*').eq('id',1).maybeSingle();if(!error&&data){settings=data;$('dojoTitle').textContent=data.dojo_name||'우리 도장 대회 관리'}}
-async function renderParent(){if(!sb)return renderParentLocal();clearNotice();await getSettings();const {data,error}=await sb.from('events').select('id,name,event_date,location,description,categories,is_open').eq('is_open',true).order('event_date',{ascending:true});if(error){$('parentView').innerHTML='<div class="card"><h2>신청 화면을 불러오지 못했습니다</h2><p>'+esc(error.message)+'</p><button onclick="renderParent()">다시 시도</button></div>';return}events=data||[];$('parentView').innerHTML=`<div class="card"><h2>참가 신청 항목</h2><p class="muted">참가할 대회를 선택하고 대회별 신청서를 각각 작성해 주세요.</p>${events.map(e=>`<button class="event" onclick="renderApplication('${e.id}')"><div class="row"><strong>${esc(e.name)}</strong><span>›</span></div><div class="muted">${esc(e.event_date||'일정 미등록')} · ${esc(e.location||'')}</div></button>`).join('')}${events.length?'':'<div class="notice">현재 모집 중인 대회가 없습니다.</div>'}<button class="event" onclick="renderKukki()"><strong>국기원 최초 1품 접수 준비</strong><div class="muted">티콘 아이디 · 생년월일 · 키 · 몸무게</div></button></div>`}
-function renderApplication(eid){const e=events.find(x=>x.id===eid);if(!e)return renderParent();const cats=Array.isArray(e.categories)?e.categories:[];$('parentView').innerHTML=`<div class="card"><button class="secondary" onclick="renderParent()">← 신청 항목</button><h2>${esc(e.name)}</h2><form id="appForm"><div class="grid"><div class="field"><label>선수 이름 *</label><input name="name" required></div><div class="field"><label>생년월일 *</label><input name="birth" type="date" required></div><div class="field"><label>학교명 *</label><input name="school" required></div><div class="field"><label>학년 *</label><select name="grade" required><option value="">선택</option>${['유치부','초등학교 1학년','초등학교 2학년','초등학교 3학년','초등학교 4학년','초등학교 5학년','초등학교 6학년','중학생','고등학생','기타'].map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>학부모 연락처 *</label><input name="phone" type="tel" required placeholder="010-0000-0000"></div></div><h3>참가 종목 *</h3>${cats.map((c,i)=>`<label class="event"><span><input type="checkbox" name="cat" value="${i}"> ${esc(c.name)}</span> <strong>${won(c.fee)}</strong>${c.weight?`<div class="field"><label>체급 (선택 종목에만 입력)</label><input name="weight${i}" placeholder="체급 입력"></div>`:''}</label>`).join('')}<div class="field"><label>추가 요청사항</label><textarea name="memo" rows="2"></textarea></div><label class="checkline"><input type="checkbox" name="consent" required> 개인정보 수집·이용에 동의합니다.</label><div class="card"><div class="muted">참가비 합계</div><div id="total" class="total">0원</div></div><button style="width:100%">신청 및 입금 안내</button></form></div>`;
-const form=$('appForm');function recalc(){const ix=[...form.querySelectorAll('input[name=cat]:checked')].map(x=>+x.value);$('total').textContent=won(ix.reduce((s,i)=>s+(+cats[i].fee||0),0))}form.querySelectorAll('input[name=cat]').forEach(x=>x.addEventListener('change',recalc));form.onsubmit=async ev=>{ev.preventDefault();const f=new FormData(form),ix=f.getAll('cat').map(Number);if(!ix.length){alert('참가 종목을 선택해 주세요.');return}const selected=ix.map(i=>({name:cats[i].name,fee:Number(cats[i].fee||0),weight:cats[i].weight?(f.get('weight'+i)||''):''}));const amount=selected.reduce((s,c)=>s+c.fee,0);const row={event_id:e.id,athlete_name:String(f.get('name')).trim(),birthdate:f.get('birth'),school:String(f.get('school')).trim(),grade:f.get('grade'),parent_phone:String(f.get('phone')).trim(),selected_categories:selected,total_fee:amount,memo:String(f.get('memo')||''),consent:true,paid:false};const b=form.querySelector('button[type=submit],button:not(.secondary)');b.disabled=true;const {error}=await sb.from('applications').insert(row);b.disabled=false;if(error){alert('신청 저장 실패: '+error.message);return}receipt(e,row,selected,amount)} }
-function receipt(e,a,selected,amount){$('parentView').innerHTML=`<div class="card"><h2>신청이 접수되었습니다</h2><p>입금 확인 후 관리자가 납부 상태를 변경합니다.</p><hr><p>대회: <strong>${esc(e.name)}</strong></p><p>선수: <strong>${esc(a.athlete_name)}</strong></p><p>종목: ${esc(selected.map(x=>x.name+(x.weight?'('+x.weight+')':'')).join(', '))}</p><p class="muted">납부 금액</p><div class="total">${won(amount)}</div><div class="card"><h3>입금 계좌</h3><p>${esc(settings.bank_name||'은행명 입력')}</p><p>${esc(settings.account_number||'계좌번호 입력')}</p><p>예금주: ${esc(settings.account_holder||'예금주 입력')}</p><p class="muted">입금자명은 선수 이름으로 보내주세요.</p></div><button onclick="renderParent()">다른 신청 항목 보기</button></div>`}
-function renderKukki(){$('parentView').innerHTML=`<div class="card"><button class="secondary" onclick="renderParent()">← 신청 항목</button><h2>국기원 최초 1품 접수 준비</h2><form id="kf"><div class="grid"><div class="field"><label>선수 이름 *</label><input name="name" required></div><div class="field"><label>티콘 아이디 *</label><input name="tcon" required></div><div class="field"><label>생년월일 *</label><input name="birth" type="date" required></div><div class="field"><label>학부모 연락처 *</label><input name="phone" required></div><div class="field"><label>키 (cm) *</label><input name="height" type="number" min="1" step="0.1" required></div><div class="field"><label>몸무게 (kg) *</label><input name="weight" type="number" min="1" step="0.1" required></div></div><label class="checkline"><input name="consent" type="checkbox" required> 접수 준비를 위한 개인정보 수집·이용에 동의합니다.</label><button style="width:100%">정보 제출</button></form></div>`;$('kf').onsubmit=async ev=>{ev.preventDefault();const f=new FormData(ev.target);const {error}=await sb.from('poom_intakes').insert({athlete_name:String(f.get('name')).trim(),tcon_id:String(f.get('tcon')).trim(),birthdate:f.get('birth'),height_cm:Number(f.get('height')),weight_kg:Number(f.get('weight')),parent_phone:String(f.get('phone')).trim(),status:'확인 필요',consent:true});if(error){alert('저장 실패: '+error.message);return}$('parentView').innerHTML='<div class="card"><h2>정보가 접수되었습니다</h2><button onclick="renderParent()">돌아가기</button></div>'}}
-async function renderAdmin(){if(!sb){$('adminView').innerHTML='<div class="card"><h2>설정 필요</h2><p>운영용 키를 index.html에 넣어야 합니다.</p></div>';return}const {data:{session}}=await sb.auth.getSession();currentUser=session?.user||null;if(!currentUser){$('adminView').innerHTML=`<div class="card"><h2>관리자 로그인</h2><form id="login"><div class="field"><label>관리자 이메일</label><input name="email" type="email" required></div><div class="field"><label>비밀번호</label><input name="password" type="password" required></div><button style="width:100%">로그인</button></form></div>`;$('login').onsubmit=async ev=>{ev.preventDefault();const f=new FormData(ev.target);const {data,error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('password')});if(error){alert('로그인 실패: '+error.message);return}const {data:admin,error:ae}=await sb.from('admins').select('user_id').eq('user_id',data.user.id).maybeSingle();if(ae||!admin){await sb.auth.signOut();alert('관리자 권한이 등록되지 않았습니다. 설정 안내의 관리자 등록 단계를 완료하세요.');return}renderAdmin()};return}
-const {data:admin}=await sb.from('admins').select('user_id').eq('user_id',currentUser.id).maybeSingle();if(!admin){await sb.auth.signOut();alert('이 계정은 관리자 등록이 안 되어 있습니다.');return renderAdmin()};await getSettings();const {data:evs}=await sb.from('events').select('*').order('event_date',{ascending:true});const {data:apps,error:appErr}=await sb.from('applications').select('*').order('created_at',{ascending:false});const {data:pooms,error:poomErr}=await sb.from('poom_intakes').select('*').order('created_at',{ascending:false});if(appErr||poomErr){$('adminView').innerHTML='<div class="card">명단 불러오기 오류: '+esc(appErr?.message||poomErr?.message)+'</div>';return}
-$('adminView').innerHTML=`<div class="row mobile"><div><h2>관리자 대시보드</h2><p class="muted">신청 명단과 참가비를 관리합니다.</p></div><button class="secondary" id="logout">로그아웃</button></div><div class="card"><h3>도장 및 계좌 설정</h3><form id="sf"><div class="grid"><div class="field"><label>도장명</label><input name="dojo" value="${esc(settings.dojo_name||'우리 도장')}"></div><div class="field"><label>은행명</label><input name="bank" value="${esc(settings.bank_name||'')}"></div><div class="field"><label>계좌번호</label><input name="account" value="${esc(settings.account_number||'')}"></div><div class="field"><label>예금주</label><input name="holder" value="${esc(settings.account_holder||'')}"></div></div><button>설정 저장</button></form></div><div class="card"><h3>대회 등록</h3><form id="ef"><div class="field"><label>대회명 *</label><input name="name" required></div><div class="grid"><div class="field"><label>날짜</label><input name="date" type="date"></div><div class="field"><label>장소</label><input name="location"></div></div><div class="field"><label>종목 및 참가비 *</label><p class="muted">한 줄에 하나씩: 종목명,금액,체급 필요 여부(true/false)</p><textarea name="cats" rows="4" placeholder="품새,30000,false&#10;겨루기,40000,true" required></textarea></div><div class="field"><label>안내</label><textarea name="description" rows="2"></textarea></div><label class="checkline"><input type="checkbox" name="open" checked> 학부모에게 공개</label><button>대회 등록</button></form></div><div class="card"><h3>등록 대회</h3>${(evs||[]).map(e=>`<div class="row" style="padding:9px 0;border-bottom:1px solid #eee"><div><strong>${esc(e.name)}</strong><div class="muted">${esc(e.event_date||'일정 미등록')} · ${e.is_open?'모집 중':'마감'}</div></div><button class="secondary" onclick="toggleEvent('${e.id}',${!e.is_open})">${e.is_open?'마감':'모집 열기'}</button></div>`).join('')||'등록된 대회 없음'}</div><div class="card"><div class="row mobile"><h3>대회 신청 명단 (${(apps||[]).length})</h3><button class="secondary" onclick="exportApps()">CSV 다운로드</button></div><div class="tablewrap"><table><thead><tr><th>접수</th><th>대회/선수</th><th>연락처</th><th>학교/학년</th><th>종목/금액</th><th>납부</th></tr></thead><tbody>${(apps||[]).map(a=>{const e=(evs||[]).find(e=>e.id===a.event_id);return `<tr><td>${esc((a.created_at||'').slice(0,10))}</td><td>${esc(e?.name||'대회')}<br><strong>${esc(a.athlete_name)}</strong><br>${esc(a.birthdate)}</td><td>${esc(a.parent_phone)}</td><td>${esc(a.school)}<br>${esc(a.grade)}</td><td>${esc((a.selected_categories||[]).map(c=>c.name+(c.weight?'('+c.weight+')':'')).join(', '))}<br><strong>${won(a.total_fee)}</strong></td><td><span class="pill ${a.paid?'green':'orange'}">${a.paid?'입금 완료':'입금 대기'}</span><br><button class="secondary" onclick="togglePaid('${a.id}',${!a.paid})">${a.paid?'미납 처리':'입금 확인'}</button></td></tr>`}).join('')||'<tr><td colspan="6">신청 내역 없음</td></tr>'}</tbody></table></div></div><div class="card"><h3>국기원 최초 1품 접수 준비 (${(pooms||[]).length})</h3><div class="tablewrap"><table><thead><tr><th>선수</th><th>연락처</th><th>티콘 ID</th><th>생년월일</th><th>키/몸무게</th><th>상태</th></tr></thead><tbody>${(pooms||[]).map(p=>`<tr><td>${esc(p.athlete_name)}</td><td>${esc(p.parent_phone)}</td><td>${esc(p.tcon_id)}</td><td>${esc(p.birthdate)}</td><td>${esc(p.height_cm)}cm / ${esc(p.weight_kg)}kg</td><td><button class="secondary" onclick="togglePoom('${p.id}','${p.status==='확인 완료'?'확인 필요':'확인 완료'}')">${esc(p.status||'확인 필요')}</button></td></tr>`).join('')||'<tr><td colspan="6">신청 내역 없음</td></tr>'}</tbody></table></div></div>`;
-$('logout').onclick=async()=>{await sb.auth.signOut();renderAdmin()};$('sf').onsubmit=async ev=>{ev.preventDefault();const f=new FormData(ev.target),row={id:1,dojo_name:String(f.get('dojo')||'우리 도장'),bank_name:String(f.get('bank')||''),account_number:String(f.get('account')||''),account_holder:String(f.get('holder')||''),updated_at:new Date().toISOString()};const {error}=await sb.from('settings').upsert(row,{onConflict:'id'});if(error)alert('저장 실패: '+error.message);else{alert('설정 저장 완료');renderAdmin()}};$('ef').onsubmit=async ev=>{ev.preventDefault();const f=new FormData(ev.target);let cats;try{cats=String(f.get('cats')).split('\n').filter(x=>x.trim()).map(line=>{const p=line.split(',').map(x=>x.trim());if(p.length<2||!p[0]||!Number.isFinite(Number(p[1]))||Number(p[1])<0)throw Error('종목, 금액, 체급 여부를 확인하세요.');return {name:p[0],fee:Number(p[1]),weight:(p[2]||'false').toLowerCase()==='true'}})}catch(e){alert(e.message);return}const {error}=await sb.from('events').insert({name:String(f.get('name')).trim(),event_date:f.get('date')||null,location:String(f.get('location')||''),description:String(f.get('description')||''),categories:cats,is_open:f.get('open')==='on'});if(error)alert('대회 등록 실패: '+error.message);else{alert('대회 등록 완료');renderAdmin()}};
+const $=id=>document.getElementById(id);
+let sb=null,currentUser=null;
+let settings={dojo_name:'우리 도장',bank_name:'은행명 입력',account_number:'계좌번호 입력',account_holder:'예금주 입력'};
+let events=[];
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function won(n){return Number(n||0).toLocaleString('ko-KR')+'원'}
+function notice(s){$('topmsg').textContent=s;$('topmsg').classList.remove('hidden')}
+function clearNotice(){$('topmsg').classList.add('hidden')}
+
+function init(){
+ if(!window.supabase){notice('연결 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인하세요.');return}
+ sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+ renderParent();
 }
-async function toggleEvent(id,open){const {error}=await sb.from('events').update({is_open:open}).eq('id',id);if(error)alert(error.message);else renderAdmin()} async function togglePaid(id,paid){const {error}=await sb.from('applications').update({paid}).eq('id',id);if(error)alert(error.message);else renderAdmin()} async function togglePoom(id,status){const {error}=await sb.from('poom_intakes').update({status}).eq('id',id);if(error)alert(error.message);else renderAdmin()}
-function exportApps(){sb.from('applications').select('*').then(({data,error})=>{if(error)return alert(error.message);const rows=[['선수','생년월일','학교','학년','연락처','금액','납부','종목']].concat((data||[]).map(a=>[a.athlete_name,a.birthdate,a.school,a.grade,a.parent_phone,a.total_fee,a.paid?'입금 완료':'입금 대기',(a.selected_categories||[]).map(c=>c.name+(c.weight?'('+c.weight+')':'')).join('|')]));const csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='대회신청명단.csv';a.click();URL.revokeObjectURL(url)})}
+function showView(v){
+ $('parentView').classList.toggle('hidden',v!=='parent');
+ $('adminView').classList.toggle('hidden',v!=='admin');
+ $('navParent').classList.toggle('active',v==='parent');
+ $('navAdmin').classList.toggle('active',v==='admin');
+ if(v==='parent')renderParent();else renderAdmin();
+}
+async function getSettings(){
+ const {data,error}=await sb.from('settings').select('*').eq('id',1).maybeSingle();
+ if(!error&&data){settings=data;$('dojoTitle').textContent=data.dojo_name||'우리 도장 대회 관리'}
+}
+async function renderParent(){
+ if(!sb)return;
+ clearNotice();
+ await getSettings();
+ const {data,error}=await sb.from('events').select('id,name,event_date,location,description,categories,is_open').eq('is_open',true).order('event_date',{ascending:true});
+ if(error){
+  $('parentView').innerHTML='<div class="card"><h2>신청 화면을 불러오지 못했습니다</h2><p>'+esc(error.message)+'</p><button onclick="renderParent()">다시 시도</button></div>';
+  return;
+ }
+ events=data||[];
+ $('parentView').innerHTML=`<div class="card"><h2>참가 신청 항목</h2><p class="muted">참가할 대회를 선택하고 대회별 신청서를 각각 작성해 주세요.</p>${events.map(e=>`<button class="event" onclick="renderApplication('${e.id}')"><div class="row"><strong>${esc(e.name)}</strong><span>›</span></div><div class="muted">${esc(e.event_date||'일정 미등록')} · ${esc(e.location||'')}</div></button>`).join('')}${events.length?'':'<div class="notice">현재 모집 중인 대회가 없습니다.</div>'}<button class="event" onclick="renderKukki()"><strong>국기원 최초 1품 접수 준비</strong><div class="muted">티콘 아이디 · 생년월일 · 키 · 몸무게</div></button></div>`;
+}
+function renderApplication(eid){
+ const e=events.find(x=>x.id===eid);
+ if(!e)return renderParent();
+ const cats=Array.isArray(e.categories)?e.categories:[];
+ $('parentView').innerHTML=`<div class="card"><button class="secondary" onclick="renderParent()">← 신청 항목</button><h2>${esc(e.name)}</h2><form id="appForm"><div class="grid"><div class="field"><label>선수 이름 *</label><input name="name" required></div><div class="field"><label>생년월일 *</label><input name="birth" type="date" required></div><div class="field"><label>학교명 *</label><input name="school" required></div><div class="field"><label>학년 *</label><select name="grade" required><option value="">선택</option>${['유치부','초등학교 1학년','초등학교 2학년','초등학교 3학년','초등학교 4학년','초등학교 5학년','초등학교 6학년','중학생','고등학생','기타'].map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label>학부모 연락처 *</label><input name="phone" type="tel" required placeholder="010-0000-0000"></div></div><h3>참가 종목 *</h3>${cats.map((c,i)=>`<label class="event"><span><input type="checkbox" name="cat" value="${i}"> ${esc(c.name)}</span> <strong>${won(c.fee)}</strong>${c.weight?`<div class="field"><label>체급</label><input name="weight${i}" placeholder="체급 입력"></div>`:''}</label>`).join('')}<div class="field"><label>추가 요청사항</label><textarea name="memo" rows="2"></textarea></div><label class="checkline"><input type="checkbox" name="consent" required> 개인정보 수집·이용에 동의합니다.</label><div class="card"><div class="muted">참가비 합계</div><div id="total" class="total">0원</div></div><button style="width:100%">신청 및 입금 안내</button></form></div>`;
+ const form=$('appForm');
+ function recalc(){
+  const ix=[...form.querySelectorAll('input[name=cat]:checked')].map(x=>+x.value);
+  $('total').textContent=won(ix.reduce((s,i)=>s+(+cats[i].fee||0),0));
+ }
+ form.querySelectorAll('input[name=cat]').forEach(x=>x.addEventListener('change',recalc));
+ form.onsubmit=async ev=>{
+  ev.preventDefault();
+  const f=new FormData(form),ix=f.getAll('cat').map(Number);
+  if(!ix.length){alert('참가 종목을 선택해 주세요.');return}
+  const selected=ix.map(i=>({name:cats[i].name,fee:Number(cats[i].fee||0),weight:cats[i].weight?(f.get('weight'+i)||''):''}));
+  const amount=selected.reduce((s,c)=>s+c.fee,0);
+  const row={
+   event_id:e.id,
+   athlete_name:String(f.get('name')).trim(),
+   birth_date:f.get('birth'),
+   school:String(f.get('school')).trim(),
+   grade:f.get('grade'),
+   parent_phone:String(f.get('phone')).trim(),
+   selected_categories:selected,
+   total_fee:amount,
+   notes:String(f.get('memo')||''),
+   consent:true,
+   paid:false
+  };
+  const b=form.querySelector('button:not(.secondary)');
+  b.disabled=true;
+  const {error}=await sb.from('applications').insert(row);
+  b.disabled=false;
+  if(error){alert('신청 저장 실패: '+error.message);return}
+  receipt(e,row,selected,amount);
+ };
+}
+function receipt(e,a,selected,amount){
+ $('parentView').innerHTML=`<div class="card"><h2>신청이 접수되었습니다</h2><p>입금 확인 후 관리자가 납부 상태를 변경합니다.</p><hr><p>대회: <strong>${esc(e.name)}</strong></p><p>선수: <strong>${esc(a.athlete_name)}</strong></p><p>종목: ${esc(selected.map(x=>x.name+(x.weight?'('+x.weight+')':'')).join(', '))}</p><p class="muted">납부 금액</p><div class="total">${won(amount)}</div><div class="card"><h3>입금 계좌</h3><p>${esc(settings.bank_name||'은행명 입력')}</p><p>${esc(settings.account_number||'계좌번호 입력')}</p><p>예금주: ${esc(settings.account_holder||'예금주 입력')}</p><p class="muted">입금자명은 선수 이름으로 보내주세요.</p></div><button onclick="renderParent()">다른 신청 항목 보기</button></div>`;
+}
+function renderKukki(){
+ $('parentView').innerHTML=`<div class="card"><button class="secondary" onclick="renderParent()">← 신청 항목</button><h2>국기원 최초 1품 접수 준비</h2><form id="kf"><div class="grid"><div class="field"><label>선수 이름 *</label><input name="name" required></div><div class="field"><label>티콘 아이디 *</label><input name="tcon" required></div><div class="field"><label>생년월일 *</label><input name="birth" type="date" required></div><div class="field"><label>학부모 연락처 *</label><input name="phone" required></div><div class="field"><label>키 (cm) *</label><input name="height" type="number" min="1" step="0.1" required></div><div class="field"><label>몸무게 (kg) *</label><input name="weight" type="number" min="1" step="0.1" required></div></div><label class="checkline"><input name="consent" type="checkbox" required> 접수 준비를 위한 개인정보 수집·이용에 동의합니다.</label><button style="width:100%">정보 제출</button></form></div>`;
+ $('kf').onsubmit=async ev=>{
+  ev.preventDefault();
+  const f=new FormData(ev.target);
+  const {error}=await sb.from('poom_intakes').insert({
+   athlete_name:String(f.get('name')).trim(),
+   tcon_id:String(f.get('tcon')).trim(),
+   birth_date:f.get('birth'),
+   height_cm:Number(f.get('height')),
+   weight_kg:Number(f.get('weight')),
+   parent_phone:String(f.get('phone')).trim(),
+   status:'확인 필요',
+   consent:true
+  });
+  if(error){alert('저장 실패: '+error.message);return}
+  $('parentView').innerHTML='<div class="card"><h2>정보가 접수되었습니다</h2><button onclick="renderParent()">돌아가기</button></div>';
+ };
+}
+async function renderAdmin(){
+ if(!sb)return;
+ const {data:{session}}=await sb.auth.getSession();
+ currentUser=session?.user||null;
+ if(!currentUser){
+  $('adminView').innerHTML=`<div class="card"><h2>관리자 로그인</h2><form id="login"><div class="field"><label>관리자 이메일</label><input name="email" type="email" required></div><div class="field"><label>비밀번호</label><input name="password" type="password" required></div><button style="width:100%">로그인</button></form></div>`;
+  $('login').onsubmit=async ev=>{
+   ev.preventDefault();
+   const f=new FormData(ev.target);
+   const {data,error}=await sb.auth.signInWithPassword({email:f.get('email'),password:f.get('password')});
+   if(error){alert('로그인 실패: '+error.message);return}
+   const {data:admin,error:ae}=await sb.from('admins').select('user_id').eq('user_id',data.user.id).maybeSingle();
+   if(ae||!admin){await sb.auth.signOut();alert('관리자 권한이 등록되지 않았습니다.');return}
+   renderAdmin();
+  };
+  return;
+ }
+ const {data:admin}=await sb.from('admins').select('user_id').eq('user_id',currentUser.id).maybeSingle();
+ if(!admin){await sb.auth.signOut();alert('이 계정은 관리자 등록이 안 되어 있습니다.');return renderAdmin()}
+ await getSettings();
+ const {data:evs}=await sb.from('events').select('*').order('event_date',{ascending:true});
+ const {data:apps,error:appErr}=await sb.from('applications').select('*').order('created_at',{ascending:false});
+ const {data:pooms,error:poomErr}=await sb.from('poom_intakes').select('*').order('created_at',{ascending:false});
+ if(appErr||poomErr){$('adminView').innerHTML='<div class="card">명단 불러오기 오류: '+esc(appErr?.message||poomErr?.message)+'</div>';return}
+ $('adminView').innerHTML=`<div class="row mobile"><div><h2>관리자 대시보드</h2><p class="muted">신청 명단과 참가비를 관리합니다.</p></div><button class="secondary" id="logout">로그아웃</button></div><div class="card"><h3>도장 및 계좌 설정</h3><form id="sf"><div class="grid"><div class="field"><label>도장명</label><input name="dojo" value="${esc(settings.dojo_name||'우리 도장')}"></div><div class="field"><label>은행명</label><input name="bank" value="${esc(settings.bank_name||'')}"></div><div class="field"><label>계좌번호</label><input name="account" value="${esc(settings.account_number||'')}"></div><div class="field"><label>예금주</label><input name="holder" value="${esc(settings.account_holder||'')}"></div></div><button>설정 저장</button></form></div><div class="card"><h3>대회 등록</h3><form id="ef"><div class="field"><label>대회명 *</label><input name="name" required></div><div class="grid"><div class="field"><label>날짜</label><input name="date" type="date"></div><div class="field"><label>장소</label><input name="location"></div></div><div class="field"><label>종목 및 참가비 *</label><p class="muted">한 줄에 하나씩: 종목명,금액,체급 필요 여부(true/false)</p><textarea name="cats" rows="4" placeholder="품새,30000,false&#10;겨루기,40000,true" required></textarea></div><div class="field"><label>안내</label><textarea name="description" rows="2"></textarea></div><label class="checkline"><input type="checkbox" name="open" checked> 학부모에게 공개</label><button>대회 등록</button></form></div><div class="card"><h3>등록 대회</h3>${(evs||[]).map(e=>`<div class="row" style="padding:9px 0;border-bottom:1px solid #eee"><div><strong>${esc(e.name)}</strong><div class="muted">${esc(e.event_date||'일정 미등록')} · ${e.is_open?'모집 중':'마감'}</div></div><button class="secondary" onclick="toggleEvent('${e.id}',${!e.is_open})">${e.is_open?'마감':'모집 열기'}</button></div>`).join('')||'등록된 대회 없음'}</div><div class="card"><div class="row mobile"><h3>대회 신청 명단 (${(apps||[]).length})</h3><button class="secondary" onclick="exportApps()">CSV 다운로드</button></div><div class="tablewrap"><table><thead><tr><th>접수</th><th>대회/선수</th><th>연락처</th><th>학교/학년</th><th>종목/금액</th><th>납부</th></tr></thead><tbody>${(apps||[]).map(a=>{const e=(evs||[]).find(e=>e.id===a.event_id);return `<tr><td>${esc((a.created_at||'').slice(0,10))}</td><td>${esc(e?.name||'대회')}<br><strong>${esc(a.athlete_name)}</strong><br>${esc(a.birth_date)}</td><td>${esc(a.parent_phone)}</td><td>${esc(a.school)}<br>${esc(a.grade)}</td><td>${esc((a.selected_categories||[]).map(c=>c.name+(c.weight?'('+c.weight+')':'')).join(', '))}<br><strong>${won(a.total_fee)}</strong></td><td><span class="pill ${a.paid?'green':'orange'}">${a.paid?'입금 완료':'입금 대기'}</span><br><button class="secondary" onclick="togglePaid('${a.id}',${!a.paid})">${a.paid?'미납 처리':'입금 확인'}</button></td></tr>`}).join('')||'<tr><td colspan="6">신청 내역 없음</td></tr>'}</tbody></table></div></div><div class="card"><h3>국기원 최초 1품 접수 준비 (${(pooms||[]).length})</h3><div class="tablewrap"><table><thead><tr><th>선수</th><th>연락처</th><th>티콘 ID</th><th>생년월일</th><th>키/몸무게</th><th>상태</th></tr></thead><tbody>${(pooms||[]).map(p=>`<tr><td>${esc(p.athlete_name)}</td><td>${esc(p.parent_phone)}</td><td>${esc(p.tcon_id)}</td><td>${esc(p.birth_date)}</td><td>${esc(p.height_cm)}cm / ${esc(p.weight_kg)}kg</td><td><button class="secondary" onclick="togglePoom('${p.id}','${p.status==='확인 완료'?'확인 필요':'확인 완료'}')">${esc(p.status||'확인 필요')}</button></td></tr>`).join('')||'<tr><td colspan="6">신청 내역 없음</td></tr>'}</tbody></table></div></div>`;
+ $('logout').onclick=async()=>{await sb.auth.signOut();renderAdmin()};
+ $('sf').onsubmit=async ev=>{
+  ev.preventDefault();
+  const f=new FormData(ev.target),row={id:1,dojo_name:String(f.get('dojo')||'우리 도장'),bank_name:String(f.get('bank')||''),account_number:String(f.get('account')||''),account_holder:String(f.get('holder')||''),updated_at:new Date().toISOString()};
+  const {error}=await sb.from('settings').upsert(row,{onConflict:'id'});
+  if(error)alert('저장 실패: '+error.message);else{alert('설정 저장 완료');renderAdmin()}
+ };
+ $('ef').onsubmit=async ev=>{
+  ev.preventDefault();
+  const f=new FormData(ev.target);let cats;
+  try{cats=String(f.get('cats')).split('\n').filter(x=>x.trim()).map(line=>{const p=line.split(',').map(x=>x.trim());if(p.length<2||!p[0]||!Number.isFinite(Number(p[1]))||Number(p[1])<0)throw Error('종목, 금액, 체급 여부를 확인하세요.');return {name:p[0],fee:Number(p[1]),weight:(p[2]||'false').toLowerCase()==='true'}})}
+  catch(e){alert(e.message);return}
+  const {error}=await sb.from('events').insert({name:String(f.get('name')).trim(),event_date:f.get('date')||null,location:String(f.get('location')||''),description:String(f.get('description')||''),categories:cats,is_open:f.get('open')==='on'});
+  if(error)alert('대회 등록 실패: '+error.message);else{alert('대회 등록 완료');renderAdmin()}
+ };
+}
+async function toggleEvent(id,open){const {error}=await sb.from('events').update({is_open:open}).eq('id',id);if(error)alert(error.message);else renderAdmin()}
+async function togglePaid(id,paid){const {error}=await sb.from('applications').update({paid}).eq('id',id);if(error)alert(error.message);else renderAdmin()}
+async function togglePoom(id,status){const {error}=await sb.from('poom_intakes').update({status}).eq('id',id);if(error)alert(error.message);else renderAdmin()}
+function exportApps(){
+ sb.from('applications').select('*').then(({data,error})=>{
+  if(error)return alert(error.message);
+  const rows=[['선수','생년월일','학교','학년','연락처','금액','납부','종목']].concat((data||[]).map(a=>[a.athlete_name,a.birth_date,a.school,a.grade,a.parent_phone,a.total_fee,a.paid?'입금 완료':'입금 대기',(a.selected_categories||[]).map(c=>c.name+(c.weight?'('+c.weight+')':'')).join('|')]));
+  const csv='\ufeff'+rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  const a=document.createElement('a');a.href=url;a.download='대회신청명단.csv';a.click();URL.revokeObjectURL(url);
+ });
+}
 init();
-</script></body></html>
+</script>
+</body>
+</html>
