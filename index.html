@@ -150,6 +150,40 @@ th{background:#f8fafc}
 #adminView textarea::placeholder {
   color: #666666 !important;
 }
+/* 신청 화면 버튼 및 글자색 정리 */
+  /* 버튼 글자색 보정 */
+button {
+  color: #111111 !important;
+}
+
+/* 설정 저장과 대회 등록 버튼 */
+#settingsForm button,
+#ef button,
+button[type="submit"] {
+  background: #d8b46a !important;
+  color: #111111 !important;
+  font-weight: 700 !important;
+}
+
+/* 관리자 버튼은 흰 글씨 */
+#navAdmin {
+  color: #ffffff !important;
+}
+#navParent,
+#navAdmin {
+  background: #e8eef6 !important;
+  color: #173451 !important;
+}
+
+#parentView h2,
+#parentView h3,
+#parentView .event strong,
+#parentView label,
+#parentView .fee,
+#parentView .category,
+#parentView .categories {
+  color: #111111 !important;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
