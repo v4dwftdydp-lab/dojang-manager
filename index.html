@@ -67,7 +67,7 @@ button:hover {
   margin-bottom: 12px;
 }
 
-input, select, textarea {
+input, select, textarea {   background: #f2f2f2 !important;   color: #111111 !important;   border: 1px solid #bdbdbd !important;   border-radius: 9px !important; }
   background: #202124 !important;
   color: #fff !important;
   border: 1px solid #76613b !important;
@@ -128,6 +128,28 @@ th{background:#f8fafc}
 .notice{padding:12px;border-radius:10px;background:#eff6ff;color:#1e40af;font-size:13px}
 .footer{font-size:12px;color:var(--muted);text-align:center;padding:20px}
 @media(max-width:600px){.wrap{padding:10px}.grid{grid-template-columns:1fr}.hero h1{font-size:21px}.row.mobile{align-items:flex-start;flex-direction:column}}
+/* 관리자 화면 글자색 */
+#adminView h1,
+#adminView h2,
+#adminView h3,
+#adminView label,
+#adminView p,
+#adminView .muted {
+  color: #111111 !important;
+}
+
+#adminView input,
+#adminView select,
+#adminView textarea {
+  background: #f2f2f2 !important;
+  color: #111111 !important;
+  border-color: #bdbdbd !important;
+}
+
+#adminView input::placeholder,
+#adminView textarea::placeholder {
+  color: #666666 !important;
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
