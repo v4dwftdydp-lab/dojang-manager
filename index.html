@@ -100,7 +100,7 @@ async function renderParent(){
   return;
  }
  events=data||[];
- $('parentView').innerHTML=`<div class="card"><h2>참가 신청 항목</h2><p class="muted">참가할 대회를 선택하고 대회별 신청서를 각각 작성해 주세요.</p>${events.map(e=>`<button class="event" onclick="renderApplication('${e.id}')"><div class="row"><strong>${esc(e.name)}</strong><span>›</span></div><div class="muted">${esc(e.event_date||'일정 미등록')} · ${esc(e.location||'')}</div></button>`).join('')}${events.length?'':'<div class="notice">현재 모집 중인 대회가 없습니다.</div>'}<button class="event" onclick="renderKukki()"><strong>국기원 최초 1품 접수 준비</strong><div class="muted">티콘 아이디 · 생년월일 · 키 · 몸무게</div></button></div>`;
+ $('parentView').innerHTML=`<div class="card"><h2>참가 신청 항목</h2><p class="muted">참가할 대회를 선택하고 대회별 신청서를 각각 작성해 주세요.</p>${events.map(e=>`<button class="event" onclick="renderApplication('${e.id}')"><div class="row"><strong>${esc(e.name)}</strong><span>›</span></div><div class="muted">${esc(e.event_date||'일정 미등록')} · ${esc(e.location||'')}</div>${e.image_url?`<img src="${esc(e.image_url)}" alt="대회 안내 이미지" style="width:100%;max-height:320px;object-fit:contain;margin-top:10px;border-radius:8px">`:''}</button>`).join('')}${events.length?'':'<div class="notice">현재 모집 중인 대회가 없습니다.</div>'}<button class="event" onclick="renderKukki()"><strong>국기원 TCON ID 등록</strong><div class="muted">티콘 아이디 · 생년월일 · 키 · 몸무게</div></button></div>`;
 }
 function renderApplication(eid){
  const e=events.find(x=>x.id===eid);
