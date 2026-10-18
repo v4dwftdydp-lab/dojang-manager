@@ -199,7 +199,16 @@ async function renderAdmin(){
   const f=new FormData(ev.target);let cats;
   try{cats=String(f.get('cats')).split('\n').filter(x=>x.trim()).map(line=>{const p=line.split(',').map(x=>x.trim());if(p.length<2||!p[0]||!Number.isFinite(Number(p[1]))||Number(p[1])<0)throw Error('종목, 금액, 체급 여부를 확인하세요.');return {name:p[0],fee:Number(p[1]),weight:(p[2]||'false').toLowerCase()==='true'}})}
   catch(e){alert(e.message);return}
-  const {error}=await sb.from('events').insert({name:String(f.get('name')).trim(),event_date:f.get('date')||null,location:String(f.get('location')||''),description:String(f.get('description')||''),categories:cats,is_open:f.get('open')==='on'});
+const file=f.get('eventImage');
+let imageUrl=null;
+if(file&&file.size>0){
+  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){alert('JPG, PNG, WebP 이미지 파일을 5MB 이하로 선택해 주세요.');return}
+  const path=`${crypto.randomUUID()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+  const {error:uploadError}=await sb.storage.from('event-images').upload(path,file,{contentType:file.type});
+  if(uploadError){alert('이미지 업로드 실패: '+uploadError.message);return}
+  imageUrl=sb.storage.from('event-images').getPublicUrl(path).data.publicUrl;
+}
+const {error}=await sb.from('events').insert({name:String(f.get('name')).trim(),event_date:f.get('date')||null,location:String(f.get('location')||''),description:String(f.get('description')||''),categories:cats,is_open:f.get('open')==='on',image_url:imageUrl});
   if(error)alert('대회 등록 실패: '+error.message);else{alert('대회 등록 완료');renderAdmin()}
  };
 }
