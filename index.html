@@ -165,32 +165,43 @@ button[type="submit"] {
   font-weight: 700 !important;
 }
 
-/* 관리자 버튼은 흰 글씨 */
-#navAdmin {
-  color: #ffffff !important;
+/* 관리자 버튼: 흰색 배경, 검정 글씨 */
+#navAdmin.active {
+  background: #FFFFFF !important;
+  color: #FFFFFF !important;
+  border: 1px solid #FFFFFF !important;
 }
-#navParent,
-#navAdmin {
-  background: #e8eef6 !important;
-  color: #173451 !important;
+/* 관리자 버튼 선택 상태 */
+#navAdmin.active {
+  background: #FFFFFF !important;
+  color: #111214 !important;
 }
 
-#parentView h2,
-#parentView h3,
-#parentView .event strong,
-#parentView label,
-#parentView .fee,
-#parentView .category,
-#parentView .categories {
-  color: #111111 !important;
+/* 학부모 신청 버튼 */
+#navParent {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
 }
-  /* 학부모 및 관리자 화면의 대회 이름 검정색 */
-#parentView .event strong,
-#adminView .event strong,
-#adminView h1,
-#adminView h2,
-#adminView h3 {
-  color: #111111 !important;
+
+/* 학부모 신청 버튼 선택 상태 */
+#navParent.active {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
+}
+
+/* 대회 신청 및 등록 화면의 강조 버튼 */
+#parentView button:not(.secondary),
+#adminView form button {
+  background: #4F6B9A !important;
+  color: #FFFFFF !important;
+  border-color: #4F6B9A !important;
+}
+
+/* 보조 버튼 */
+button.secondary {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
+  border-color: #CBD5E1 !important;
 }
 </style>
 /* 전체 배경 및 기본 글씨 */
