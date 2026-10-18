@@ -94,7 +94,7 @@ async function renderParent(){
  if(!sb)return;
  clearNotice();
  await getSettings();
- const {data,error}=await sb.from('events').select('id,name,event_date,location,description,categories,is_open').eq('is_open',true).order('event_date',{ascending:true});
+ const {data,error}=await sb.from('events').select('id,name,event_date,location,description,categories,is_open,image_url').eq('is_open',true).order('event_date',{ascending:true});
  if(error){
   $('parentView').innerHTML='<div class="card"><h2>신청 화면을 불러오지 못했습니다</h2><p>'+esc(error.message)+'</p><button onclick="renderParent()">다시 시도</button></div>';
   return;
