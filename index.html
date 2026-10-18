@@ -29,6 +29,28 @@ button {
   transition: 0.2s ease;
 }
 
+  button {
+  background: #d8b46a;
+  color: #111214;
+  font-weight: 700;
+}
+
+button.active,
+#navParent.active,
+#navAdmin.active {
+  background: #d8b46a !important;
+  color: #111214 !important;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #bdbdbd !important;
+}
 button:hover {
   filter: brightness(1.15);
 }
