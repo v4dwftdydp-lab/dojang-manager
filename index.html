@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#173451">
 <title>흑룡태권도레저스쿨</title>
 <style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 /* BLACK DRAGON TAEKWONDO THEME */
 body {
   background: #111214 !important;
@@ -21,7 +21,7 @@ header, .hero, .banner {
 }
 
 h1, h2, h3, strong {
-  color: #e2c078;
+  color: #111214;
 }
 
 button {
@@ -48,8 +48,8 @@ button:hover {
 
 .event {
   background: #202124 !important;
-  border: 1px solid #5f4c2c !important;
-  color: #fff !important;
+  border: 1px solid #5f6470 !important;
+  color: #ffffff ! !important;
   padding: 16px !important;
   margin-bottom: 12px;
 }
@@ -62,7 +62,7 @@ input, select, textarea {   background: #f2f2f2 !important;   color: #111111 !im
 }
 
 label {
-  color: #e2c078;
+ color: #111214 !important;
 }
 
 .muted {
@@ -70,7 +70,7 @@ label {
 }
 
 .notice {
-  background: #29251d !important;
+  background: #f1f5f9 !important;
   border: 1px solid #8f7138 !important;
   color: #f5e4bd !important;
   border-radius: 12px;
@@ -79,7 +79,7 @@ label {
 img {
   border-radius: 12px;
 }
- <style>
+  
 :root{--navy:#173451;--blue:#2563eb;--bg:#f4f7fb;--line:#dbe3ed;--muted:#64748b}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:#172033}
@@ -143,16 +143,12 @@ button {
   color: #111111 !important;
 }
 
-/* 관리자 버튼: 흰색 배경, 검정 글씨 */
+/* 관리자 버튼: 흰색 배경 + 흰색 글씨 */
+#navAdmin,
 #navAdmin.active {
   background: #FFFFFF !important;
   color: #FFFFFF !important;
   border: 1px solid #FFFFFF !important;
-}
-/* 관리자 버튼 선택 상태 */
-#navAdmin.active {
-  background: #FFFFFF !important;
-  color: #111214 !important;
 }
 
 /* 학부모 신청 버튼 */
@@ -465,3 +461,43 @@ init();
 </script>
 </body>
 </html>
+
+/* 금색 버튼 제거 */
+button {
+  background: #4F6B9A !important;
+  color: #FFFFFF !important;
+  border-color: #4F6B9A !important;
+}
+
+/* 학부모 신청 버튼 */
+#navParent,
+#navParent.active {
+  background: #E7EEF8 !important;
+  color: #17365D !important;
+  border-color: #E7EEF8 !important;
+}
+
+/* 관리자 버튼: 흰색 배경 + 흰색 글씨 */
+#navAdmin,
+#navAdmin.active {
+  background: #FFFFFF !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+}
+
+/* 등록된 대회 이름은 흰색 */
+#adminView .event strong,
+#parentView .event strong {
+  color: #FFFFFF !important;
+}
+
+/* 상단 테두리 금색 제거 */
+header,
+.hero {
+  border-color: #CBD5E1 !important;
+}
+
+/* 금색 제목과 라벨 제거 */
+h1, h2, h3, strong, label {
+  color: #111214;
+}
